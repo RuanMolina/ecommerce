@@ -2,9 +2,14 @@ package br.com.runa.ecommerce.ecommerce.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.*;
 
 import java.math.BigDecimal;
-
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode
+@Setter
+@Getter
 @Entity
 @Table(name = "produtos")
 public class Produto {
@@ -14,10 +19,6 @@ public class Produto {
     private Long id;
     private String nome;
     private BigDecimal valor;
-
-
-    public Produto() {
-    }
 
     public Produto(String nome, BigDecimal valor) {
         this.nome = nome;
