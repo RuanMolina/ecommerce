@@ -5,12 +5,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @Setter
 @Getter
-@Entity
+@Entity(name = "Produto")
 @Table(name = "produtos")
 public class Produto {
 
@@ -20,32 +22,14 @@ public class Produto {
     private String nome;
     private BigDecimal valor;
 
-    public Produto(String nome, BigDecimal valor) {
+    @ManyToMany
+    private List<Categoria> categorias;
+
+    public Produto(String nome, BigDecimal valor,List<Categoria> categorias) {
         this.nome = nome;
         this.valor = valor;
+        this.categorias = categorias;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getValor() {
-        return valor.toString();
-    }
-
-    public void setValor(Double valor) {
-        this.valor = new BigDecimal(valor);
-    }
 }
