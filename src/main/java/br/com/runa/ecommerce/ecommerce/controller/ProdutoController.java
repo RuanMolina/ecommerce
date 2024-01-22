@@ -30,10 +30,16 @@ public class ProdutoController {
         var produto = prodService.findById(idProduto);
         return ResponseEntity.ok().body(produto);
     }
+    @GetMapping("/categoria/{idCategoria}")
+    public ResponseEntity<List<Produto>> getProdutoByCategoria_id(@PathVariable(value = "idCategoria")Long idCategoria){
+        var produto = prodService.findByCategoriaId(idCategoria);
+        return ResponseEntity.ok().body(produto);
+    }
 
     @PostMapping
     public ResponseEntity addProduto(@RequestBody ProdutoRequestDTO produto, UriComponentsBuilder uriBuilder){
 
+        System.out.println("Produto: " + produto);
         var produtoSalvo =prodService.save(produto);
         var uri = uriBuilder.path("/produto/{id}").buildAndExpand(produtoSalvo.getId()).toUri();
         return ResponseEntity.created(uri).build();

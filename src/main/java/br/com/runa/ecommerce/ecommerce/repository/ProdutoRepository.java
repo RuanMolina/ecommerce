@@ -13,4 +13,6 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     public List<Produto> findAll();
 
     public Optional<Produto> findById(Long id);
+
+    public List<Produto> findByCategorias_id(Long id);
 }

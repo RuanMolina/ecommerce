@@ -23,8 +23,12 @@ public class ProdutoService {
     public Produto findById(Long id){
         return prodRep.findById(id).orElseThrow();
     }
+
+    public List<Produto> findByCategoriaId(Long id){
+        return prodRep.findByCategorias_id(id);
+    }
     public Produto save(ProdutoRequestDTO produto){
-        return prodRep.save(new Produto(produto.nome(),produto.valor()));
+        return prodRep.save(new Produto(produto.nome(),produto.valor(),produto.categorias()));
     }
 
 }
