@@ -10,9 +10,9 @@ import java.util.Optional;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
     @Override
-    public List<Produto> findAll();
+    List<Produto> findAll();
 
-    public Optional<Produto> findById(Long id);
+    Optional<Produto> findById(Long id);
 
-    public List<Produto> findByCategorias_id(Long id);
+    List<Produto> findByCategorias_id(Long id);
 }
