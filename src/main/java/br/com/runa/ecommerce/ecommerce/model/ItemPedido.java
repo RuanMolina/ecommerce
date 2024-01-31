@@ -20,16 +20,21 @@ public class ItemPedido {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_produto", updatable = false)
+    @JsonIgnore
     private Produto produto;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_pedido",updatable = false)
+    @JsonIgnore
     private Pedido pedido;
     private Integer quantidade;
     private BigDecimal valor;
 
-    public ItemPedido(Pedido pedido, Produto produto){
+    public ItemPedido(Pedido pedido, Produto produto, Integer quantidade){
         this.pedido = pedido;
         this.produto = produto;
+        this.quantidade = quantidade;
+        this.valor = produto.getValor();
+        this.valor.multiply(new BigDecimal(quantidade));
     }
 }
