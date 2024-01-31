@@ -7,12 +7,11 @@ import br.com.runa.ecommerce.ecommerce.model.Produto;
 import br.com.runa.ecommerce.ecommerce.repository.PedidoRepository;
 import br.com.runa.ecommerce.ecommerce.repository.ProdutoRepository;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import org.hibernate.jpa.boot.spi.EntityManagerFactoryBuilder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 public class PedidoService {
     private PedidoRepository pedRep;
@@ -26,15 +25,18 @@ public class PedidoService {
     @Transactional(rollbackFor = RuntimeException.class)
     public Pedido gerarPedido(PedidoRequestDTO pedidoDTO){
         List<Produto> listaProd;
-        listaProd = prodRep.findAllById(pedidoDTO.produtosID());
+        List<Long> IdList =pedidoDTO.itensPedidos().stream().map(s -> s.id()).toList();
+        listaProd = prodRep.findAllById(IdList);
 
-        Pedido pedido = pedRep.save( new Pedido(listaProd));
+        Pedido pedido = pedRep.save(new Pedido(listaProd));
 
-        listaProd.forEach((item)->{
-            em.persist( new ItemPedido(pedido,item));
+        pedidoDTO.itensPedidos().forEach(item->{
+
+            em.persist( new ItemPedido(pedido,prodRep.findById(item.id()).get(),item.quantidade()));
         });
 
         return pedido;
+
     }
     public List<Pedido> findAll(){
         return pedRep.findAll();

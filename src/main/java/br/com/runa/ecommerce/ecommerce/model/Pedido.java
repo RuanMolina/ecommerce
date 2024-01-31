@@ -20,14 +20,17 @@ public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    BigDecimal valorTotal = new BigDecimal(0);
-    LocalDateTime data;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    List<ItemPedido> itensPedidos;
+    private BigDecimal valorTotal = new BigDecimal(0);
+    private BigDecimal valorFrete = new BigDecimal(0);
+
+    private LocalDateTime dataPedido;
+
+    @OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER)
+    private List<ItemPedido> itensPedidos;
 
     public Pedido(List<Produto> produtos){
-        data = LocalDateTime.now();
+        this.dataPedido = LocalDateTime.now();
         produtos.forEach((item)->{
             valorTotal = valorTotal.add(item.getValor());
         });
