@@ -1,12 +1,12 @@
 package br.com.runa.ecommerce.ecommerce.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,10 +23,11 @@ public class Produto {
     private String nome;
     private BigDecimal valor;
 
-    @ManyToMany
+    @ManyToMany()
     private List<Categoria> categorias;
 
-    @OneToMany(mappedBy = "produto")
+    @OneToMany(mappedBy = "produto",fetch = FetchType.LAZY)
+    @JsonIgnore
     List<ItemPedido> itensPedidos;
     public Produto(String nome, BigDecimal valor,List<Categoria> categorias) {
         this.nome = nome;

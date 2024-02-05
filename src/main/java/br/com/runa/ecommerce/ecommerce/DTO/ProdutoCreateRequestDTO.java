@@ -5,7 +5,7 @@ import br.com.runa.ecommerce.ecommerce.model.Categoria;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record ProdutoRequestDTO(
+public record ProdutoCreateRequestDTO(
         String nome,
         BigDecimal valor,
         List<Categoria> categorias) {
