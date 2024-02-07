@@ -29,11 +29,15 @@ public class Pedido {
     @OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER)
     private List<ItemPedido> itensPedidos;
 
-    public Pedido(List<Produto> produtos){
+    @ManyToOne
+    private Usuario usuario;
+
+    public Pedido(List<Produto> produtos, Usuario usuario){
         this.dataPedido = LocalDateTime.now();
         produtos.forEach((item)->{
             valorTotal = valorTotal.add(item.getValor());
         });
+        this.usuario = usuario;
 
     }
 

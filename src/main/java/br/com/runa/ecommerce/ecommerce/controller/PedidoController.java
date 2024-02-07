@@ -5,29 +5,30 @@ import br.com.runa.ecommerce.ecommerce.model.Pedido;
 import br.com.runa.ecommerce.ecommerce.service.PedidoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.function.EntityResponse;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("pedido")
-
 public class PedidoController {
-    private PedidoService pedidoService;
+    private final PedidoService pedidoService;
     PedidoController(PedidoService pedidoService){
         this.pedidoService = pedidoService;
     }
     @GetMapping
-    public ResponseEntity findAllPedidos(){
+    public ResponseEntity<List<Pedido>> findAllPedidos(){
         return ResponseEntity.ok(pedidoService.findAll());
     }
-    @PostMapping
-    public ResponseEntity<PedidoRequestDTO> gerarPedido(@RequestBody PedidoRequestDTO pedido ){
-        List<Long> lista = new ArrayList<>();
-        Pedido pedidoResultado = pedidoService.gerarPedido(pedido);
+    @GetMapping("/id")
+    public ResponseEntity<Pedido> findPedido(@PathVariable(value = "id") Long id){
+        return ResponseEntity.ok(pedidoService.findById(id));
 
-        return ResponseEntity.ok(pedido);
+    }
+    @PostMapping
+    public ResponseEntity<Pedido> createPedido(@RequestBody PedidoRequestDTO pedido ){
+        Pedido pedidoResultado = pedidoService.createPedido(pedido);
+
+        return ResponseEntity.ok(pedidoResultado);
 
     }
 }
